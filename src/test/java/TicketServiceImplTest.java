@@ -169,4 +169,18 @@ public class TicketServiceImplTest {
         // Then
         assertEquals(MAX_TICKETS_EXCEEDED, exception.getMessage());
     }
+
+    @Test
+    void shouldThrowExceptionWhenNoTicketRequested() {
+        // Given
+        TicketTypeRequest adultTicket = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 0);
+
+        // When
+        Exception exception = assertThrows(InvalidPurchaseException.class, () ->
+                ticketService.purchaseTickets(1L, adultTicket)
+        );
+
+        // Then
+        assertEquals(NO_TICKETS_REQUESTED, exception.getMessage());
+    }
 }
